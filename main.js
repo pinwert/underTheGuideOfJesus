@@ -1,10 +1,20 @@
 var executionTime = 0;
 var mainButton = document.querySelector('#main_btn');
-mainButton.addEventListener('click', function () { displayMessage('hello', 3) })
+var handleClick = once(displayMessage, 3);
+mainButton.addEventListener('click',  function() { handleClick('hello') } })
 
-function displayMessage(message, times) {
-    if (executionTime < times) {
-        console.log(message, executionTime);
-        executionTime++
-    }
+
+
+function displayMessage(message) {
+  console.log(message, executionTime++);
 }
+
+function once(func, times) {
+	var current = 0;
+	return function() {
+    if(current < times) {
+      func.apply(this, arguments);
+      current++;
+    }
+	};
+};
